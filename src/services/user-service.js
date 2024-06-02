@@ -19,17 +19,21 @@ class UserService {
 
   async signIn(email, password) {
     try {
+
       const user = await this.userRepository.getByEmail(email);
       if (!user) {
         throw new Error("user not found with this email");
       }
+
       const passwordsMatch = this.checkPassword(password, user.password);
       if (!passwordsMatch) {
         console.log("password doesnot match");
         throw new Error("incorrect Password");
       }
+
       const newJWT = this.createToken({ email: user.email, id: user.id });
       return newJWT;
+      
     } catch (error) {
       console.log("somethinh went wrong in  signin Process");
       throw error;
@@ -87,3 +91,4 @@ class UserService {
 }
 
 module.exports = UserService;
+ 
