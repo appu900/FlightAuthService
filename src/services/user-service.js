@@ -19,7 +19,6 @@ class UserService {
 
   async signIn(email, password) {
     try {
-
       const user = await this.userRepository.getByEmail(email);
       if (!user) {
         throw new Error("user not found with this email");
@@ -33,7 +32,6 @@ class UserService {
 
       const newJWT = this.createToken({ email: user.email, id: user.id });
       return newJWT;
-      
     } catch (error) {
       console.log("somethinh went wrong in  signin Process");
       throw error;
@@ -88,7 +86,19 @@ class UserService {
       throw error;
     }
   }
+
+  async isAdmin(userId) {
+    try {
+      console.log(userId)
+      return await this.userRepository.isAdmin(userId)
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 module.exports = UserService;
- 
+
+
+
+

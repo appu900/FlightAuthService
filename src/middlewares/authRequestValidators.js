@@ -9,6 +9,17 @@ const validateUserAuth = (req, res, next) => {
   next();
 };
 
+const validateAdminrequest = (req, res, next) => {
+  if (!req.body.id) {
+    return res.status(400).json({
+      success: false,
+      error: "user id is not present",
+    });
+  }
+  next();
+};
+
 module.exports = {
-    validateUserAuth
-}
+  validateUserAuth,
+  validateAdminrequest,
+};
