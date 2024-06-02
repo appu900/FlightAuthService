@@ -66,6 +66,24 @@ class UserService {
       throw error;
     }
   }
+
+  async isAuthenticated(token) {
+    try {
+      const response = this.verifyToken(token);
+      // console.log("token data",response)
+      if (!response) {
+        throw { error: "invalid token" };
+      }
+      const user = await this.userRepository.getById(response.id);
+      if (!user) {
+        throw { error: "No user with the correspending token exits" };
+      }
+      return user.id;
+    } catch (error) {
+      console.log("error is cheking authentication", error);
+      throw error;
+    }
+  }
 }
 
 module.exports = UserService;
