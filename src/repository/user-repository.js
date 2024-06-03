@@ -1,4 +1,6 @@
+const { StatusCodes } = require("http-status-codes");
 const { User, Role } = require("../models/index");
+const ClientError = require("../utils/client-error");
 const ValidationError = require("../utils/validation-error");
 
 class UserRepository {
@@ -47,6 +49,14 @@ class UserRepository {
           email: userEmail,
         },
       });
+      if (!user) {
+        throw new ClientError(
+          "invalid input",
+          "user not found with this email",
+          "invalid login attemt",
+          404
+        );
+      }
       return user;
     } catch (error) {
       throw error;

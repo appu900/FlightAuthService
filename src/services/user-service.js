@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const { JWT_KEY } = require("../config/serverConfig");
 const bcrypt = require("bcrypt");
 const AppErrors = require("../utils/error-handler");
+const { StatusCodes } = require("http-status-codes");
 
 class UserService {
   constructor() {
@@ -21,7 +22,7 @@ class UserService {
         "ServerError",
         "Something went wrong",
         "something went wrong is service layer",
-        500
+        StatusCodes.NOT_FOUND
       );
     }
   }
@@ -42,7 +43,8 @@ class UserService {
       const newJWT = this.createToken({ email: user.email, id: user.id });
       return newJWT;
     } catch (error) {
-      console.log("somethinh went wrong in  signin Process");
+      console.log(error);
+      console.log("somethinh went wrong in  signin Process", error);
       throw error;
     }
   }

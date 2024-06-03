@@ -34,10 +34,10 @@ const signIn = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({
+    return res.status(error.statusCode).json({
       success: false,
-      error: error.message,
-      message: "Authentication failed",
+      error: error.description,
+      message:error.message,
     });
   }
 };
