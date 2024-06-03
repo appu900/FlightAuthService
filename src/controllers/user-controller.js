@@ -13,10 +13,10 @@ const create = async (req, res) => {
       message: "User created sucessfully",
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.status(error.statusCode).json({
       success: false,
-      error: error.message,
-      message: "something went wrong",
+      error: error.description,
+      message: error.message,
     });
   }
 };
@@ -63,7 +63,7 @@ const isAuthenticated = async (req, res) => {
 
 const isAdmin = async (req, res) => {
   try {
-    console.log(req.body)
+    console.log(req.body);
     const response = await userService.isAdmin(req.body.id);
     return res.status(200).json({
       data: response,
@@ -83,5 +83,5 @@ module.exports = {
   create,
   signIn,
   isAuthenticated,
-  isAdmin
+  isAdmin,
 };
